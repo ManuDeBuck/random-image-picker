@@ -3,7 +3,8 @@
 }
 
 .random-image {
-  max-width: 80%;
+  max-height: 70%;
+  width: auto;
 }
 
 html,
