@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A random image picker">
+  <meta name="author" content="Manu De Buck">
+
+  <title>Random Image Picker</title>
+
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Random Image Picker</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div id="step-1">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h1 class="mt-5">Step 1: Upload your images</h1>
+          <div class="input-group">
+            <input type="file" class="custom-file-input" id="imagesInput"
+              multiple onchange="previewImages();">
+            <label class="custom-file-label" for="imagesInput">Choose images</label>
+          </div>
+          <button type="button" class="mt-2 btn btn-warning" onclick="nextStep();">Step 2: Pick random image</button>
+          <h1 class="mt-5" id="yourimagestitle"></h1>
+          <div id="images"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="step-2" style="display: none;">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h1 class="mt-5">Step 2: Pick your random image</h1>
+          <p id="information-text"></p>
+          <button type="button" class="btn btn-success" onclick="pickRandomImage();">Pick random</button>
+          <button type="button" class="btn btn-danger" onclick="removeAndPickRandom();">Remove and pick random</button>
+          <button type="button" class="btn btn-warning" onclick="previousStep();">Step 1: Select images</button>
+          <div id="random-image" class="step-2-clear"></div>
+        </div>
+    </div>
+
+  </div>
+
+  <script>
+    const images = [];
+    let lastSelectedIndex = -1;
+    let curStep = 1;
+    let amountSteps = 2;
+
+    function previewImages() {
+      $("#yourimagestitle").html("Images selected by you");
+      lastSelectedIndex = -1;
+      for (let file of document.getElementById("imagesInput").files){
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(file);
+
+        oFReader.onload = function (oFREvent) {
+          data = $("#images").html()
+          data += `<img class="img-thumbnail thumbnail" src='` + oFREvent.target.result + `'>`
+          $("#images").html(data);
+          images.push(oFREvent.target.result);
+        };
+      }
+    }
+
+    function pickRandomImage() {
+      if(images.length > 0){
+        lastSelectedIndex = Math.floor(Math.random()*images.length);
+        data = `<img class="img-thumbnail random-image" src="` + images[lastSelectedIndex] + `">`;
+        $("#random-image").html(data);
+      }
+    }
+
+    function nextStep() {
+      if (curStep < amountSteps){
+        $(`#step-` + curStep).css("display", "none");
+        $(`#step-` + (curStep + 1)).css("display", "");
+        curStep ++;
+      }
+    }
+
+    function previousStep() {
+      if (curStep > 0){
+        $(`#step-` + curStep).css("display", "none");
+        $(`step-` + (curStep - 1)).css("display", "");
+
+        $(`.step-`+ curStep + `-clear`).each(function() {
+          $(this).html("");
+        });
+        curStep --;
+      }
+    }
+
+    function removeAndPickRandom() {
+      if(images.length && lastSelectedIndex >= 0){
+        images.splice(lastSelectedIndex, 1);
+        pickRandomImage();
+      }
+      if(! images.length){
+        $("#information-text").html("No images left");
+        $("#random-image").html("");
+      }
+    }
+  </script>
+
+
+  <!-- Javascript -->
+  <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html> 
