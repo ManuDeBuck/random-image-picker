@@ -1,6 +1,6 @@
 const IMAGES = [];
 const AMOUNT_STEPS = 2;
-const SPEED = 500;
+const SPEED = 300;
 const PERCENT_SPEED = 0.99;
 const ROUNDS = 3;
 
@@ -41,7 +41,7 @@ function doCarousel(index, rounds_remaining, final) {
     $("#random-image").html(data);
     setTimeout(function() {
       doCarousel(index + 1, rounds_remaining, final);
-    }, (SPEED - (((rounds_remaining * IMAGES.length ) + index) / (IMAGES.length * ROUNDS)) * (SPEED * PERCENT_SPEED)));
+    }, (SPEED - (((rounds_remaining * IMAGES.length) - index) / (IMAGES.length * ROUNDS)) * (SPEED * PERCENT_SPEED)));
   } else {
     if (rounds_remaining > 0){
       doCarousel(0, rounds_remaining - 1, final)
