@@ -112,7 +112,7 @@
     function previousStep() {
       if (curStep > 0){
         $(`#step-` + curStep).css("display", "none");
-        $(`step-` + (curStep - 1)).css("display", "");
+        $(`#step-` + (curStep - 1)).css("display", "");
 
         $(`.step-`+ curStep + `-clear`).each(function() {
           $(this).html("");
