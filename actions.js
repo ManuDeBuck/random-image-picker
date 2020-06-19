@@ -1,19 +1,15 @@
-const IMAGES = [];
+const IMAGES = []; // Will put all images in this
+const ROUNDS = 1; // Amount of rounds the carousel will shift trough
+const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
+
 const AMOUNT_STEPS = 2;
-const ROUNDS = 1;
-
-let a;
-let b;
-
-let lastSelectedIndex = -1;
-let curStep = 1;
+let CURRENT_STEP = 1;
 
 function previewImages() {
     $("#yourimagestitle").html("Images selected by you");
     $("#usage").html("");
-    lastSelectedIndex = -1;
     for (let file of document.getElementById("imagesInput").files) {
-        var oFReader = new FileReader();
+        let oFReader = new FileReader();
         oFReader.readAsDataURL(file);
 
         oFReader.onload = function(oFREvent) {
@@ -29,57 +25,76 @@ function pickRandomImage() {
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
         $("#random-image").html("");
-    }
-    if (IMAGES.length > 0) {
-        lastSelectedIndex = Math.floor(Math.random() * IMAGES.length);
-        a = 2250000000 / (1000000000 * Math.log(IMAGES.length * ROUNDS) + 6907755279);
-        b = (34538776395 + 500000000 * Math.log(IMAGES.length * ROUNDS)) / (2000000000 * Math.log(IMAGES.length * ROUNDS) + 13815510558)
-        doCarousel(0, ROUNDS, lastSelectedIndex)
+    } else {
+        selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
+        const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
+        let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
+        doCarousel(0, durations);
     }
 }
 
-function doCarousel(index, roundsRemaining, final) {
-    if (index < IMAGES.length) {
+function doCarousel(index, durations) {
+    index = index % IMAGES.length;
+    if (durations.length > 0) {
         data = `<img class="img-thumbnail random-image" src="` + IMAGES[index] + `">`;
         $("#random-image").html(data);
+        const duration = durations.shift();
         setTimeout(function() {
-            doCarousel(index + 1, roundsRemaining, final);
-        }, (a * Math.log(index) + b) * (50 / Math.ceil(25 / IMAGES.length)));
+            doCarousel(index + 1, durations);
+        }, duration * 1000);
     } else {
-        roundsRemaining -= 1;
-        if (roundsRemaining > 0) {
-            doCarousel(0, roundsRemaining, final)
-        } else {
-            data = `<img class="img-thumbnail random-image" src="` + IMAGES[final] + `">`;
-            $("#random-image").html(data);
-            IMAGES.splice(final, 1);
-        }
+        // Freeze and remove image from list
+        data = `<img class="img-thumbnail random-image" src="` + IMAGES[index] + `">`;
+        $("#random-image").html(data);
+        IMAGES.splice(index, 1);
     }
+}
+
+function computeDurations(steps) {
+    const times = [];
+    for (let i = steps; i > 0; i -= 1) {
+        times.push(f(i, steps));
+    }
+    return times;
+}
+
+/**
+ * Some beautiful math to create a increasing-time effect in the carousel spin
+ */
+function f(x, steps) {
+    const carousel_time = Math.min(CAROUSEL_TIME, IMAGES.length);
+    sigm = 0;
+    for (let i = 1; i <= steps; i += 1) {
+        sigm += Math.log(i);
+    }
+    a = CAROUSEL_TIME / (steps * Math.log(steps) - sigm)
+    c = (CAROUSEL_TIME * Math.log(steps)) / (steps * Math.log(steps) - sigm);
+    return -a * Math.log(x) + c;
 }
 
 function nextStep() {
-    if (curStep < AMOUNT_STEPS) {
-        $(`#step-` + curStep).each(function() {
+    if (CURRENT_STEP < AMOUNT_STEPS) {
+        $(`#step-` + CURRENT_STEP).each(function() {
             $(this).css("display", "none");
         })
-        $(`#step-` + (curStep + 1)).each(function() {
+        $(`#step-` + (CURRENT_STEP + 1)).each(function() {
             $(this).css("display", "");
         });
-        clearStep(curStep);
-        curStep++;
+        clearStep(CURRENT_STEP);
+        CURRENT_STEP++;
     }
 }
 
 function previousStep() {
-    if (curStep > 0) {
-        $(`#step-` + curStep).each(function() {
+    if (CURRENT_STEP > 0) {
+        $(`#step-` + CURRENT_STEP).each(function() {
             $(this).css("display", "none");
         })
-        $(`#step-` + (curStep - 1)).each(function() {
+        $(`#step-` + (CURRENT_STEP - 1)).each(function() {
             $(this).css("display", "");
         });
-        clearStep(curStep);
-        curStep--;
+        clearStep(CURRENT_STEP);
+        CURRENT_STEP--;
     }
 }
 
