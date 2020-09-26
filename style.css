@@ -19,3 +19,8 @@ body {
 .sticky-footer {
   flex-shrink: none;
 }
+
+.img-thumbnail.random-image {
+  padding:5px;
+  background-color:transparent
+}
