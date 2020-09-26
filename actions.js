@@ -1,4 +1,4 @@
-const IMAGES = []; // Will put all images in this
+let IMAGES = []; // Will put all images in this
 const ROUNDS = 1; // Amount of rounds the carousel will shift trough
 const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
 
@@ -22,6 +22,8 @@ function previewImages() {
 }
 
 function pickRandomImage() {
+    $("#reset-button").prop('disabled', false);
+    $("#pick-button").prop('disabled', true);
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
         $("#random-image").html("");
@@ -50,6 +52,7 @@ function doCarousel(index, durations) {
             randomImage.css("background-color", "#343a40");
         }, 1000);
         IMAGES.splice(index, 1);
+        $("#pick-button").prop('disabled', false);
     }
 }
 
@@ -85,11 +88,19 @@ function nextStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP++;
+        if (!IMAGES.length) {
+            $("#information-text").html("No images left");
+            $("#reset-button").prop('disabled', false);
+            $("#pick-button").prop('disabled', true);
+        } else {
+            $("#reset-button").prop('disabled', true);
+        }
     }
 }
 
 function previousStep() {
     if (CURRENT_STEP > 0) {
+        IMAGES = [];
         $(`#step-` + CURRENT_STEP).each(function() {
             $(this).css("display", "none");
         })
@@ -98,6 +109,7 @@ function previousStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP--;
+        $("#reset-button").prop('disabled', true);
     }
 }
 

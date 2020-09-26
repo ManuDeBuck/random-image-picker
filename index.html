@@ -3,79 +3,80 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="A random image picker. This will pick a random image from a bunch of images with a nice visual carousel.">
-  <meta name="author" content="Manu De Buck">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A random image picker. This will pick a random image from a bunch of images with a nice visual carousel.">
+    <meta name="author" content="Manu De Buck">
 
-  <title>Random Image Picker</title>
+    <title>Random Image Picker</title>
 
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
 </head>
 
 <body class="d-flex flex-column">
 
-  <div class="page-content d-flex flex-column">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-      <div class="container">
-        <a class="navbar-brand" href="https://manudebuck.github.io/random-image-picker">Random Image Picker</a>
-      </div>
-    </nav>
-  
-    <!-- Page Content -->
-    <div class="container page-content">
-      <div id="step-1">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h1 class="mt-3 mb-3">Upload your images</h1>
-            <div class="row text-center ml-1">
-              <div class="input-group col-9">
-                <input type="file" class="custom-file-input" id="imagesInput"
-                  multiple onchange="previewImages();">
-                <label class="custom-file-label" for="imagesInput">Choose images</label>
+    <div class="page-content d-flex flex-column">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+            <div class="container">
+                <a class="navbar-brand" href="https://manudebuck.github.io/random-image-picker">Random Image Picker</a>
+            </div>
+        </nav>
+      
+        <!-- Page Content -->
+        <div class="container page-content">
+            <div id="step-1">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h1 class="mt-3 mb-3">Upload your images</h1>
+                        <div class="row text-center ml-1">
+                            <div class="input-group col-9">
+                                <input type="file" class="custom-file-input" id="imagesInput" multiple onchange="previewImages();">
+                                <label class="custom-file-label" for="imagesInput">Choose images</label>
+                            </div>
+                            <button type="button" class="btn btn-warning col-2 ml-1" onclick="nextStep();">Next step</button>
+                        </div>
+                        <h1 class="mt-5 step-1-clear" id="yourimagestitle"></h1>
+                        <div id="images" class="step-1-clear"></div>
+                    </div>
+                    <div class="row mr-1 ml-1">
+                        <h1>Explanation</h1>
+                        <p>Above you can choose pictures you want to add to the carousel by clicking 'Browse'. When clicking on 'Next Step' you wil get to the random-image-picker screen. There you can click on 'Pick random image' to pick a random image.
+                            Afterwards it will be removed from the queue and you can click the button again. Now it will pick another random image and the previous image will be excluded. You can also reset the images and upload new ones by clicking the
+                            'Reset images button'.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step-2" style="display: none;">
+              <div class="row">
+                <div class="col-lg-12 text-center">
+                  <h1 class="mt-3 mb-3">Random image picker</h1>
+                  <p id="information-text" class="step-2-clear"></p>
+                  <button type="button" class="btn btn-success" onclick="pickRandomImage();">Pick random image</button>
+                  <button type="button" class="btn btn-warning" onclick="previousStep();">Reset images</button>
+                  <div id="random-image-div" class="step-2-clear h-55 mt-5">
+                    <img id="random-image" class="img-thumbnail random-image" src="">
+                  </div>
+                </div>
               </div>
-              <button type="button" class="btn btn-warning col-2 ml-1" onclick="nextStep();">Next step</button>
             </div>
-            <h1 class="mt-5 step-1-clear" id="yourimagestitle"></h1>
-            <div id="images" class="step-1-clear"></div>
-          </div>
-          <div class="row mr-1 ml-1">
-            <h1>Explanation</h1>
-            <p>Above you can choose pictures you want to add to the carousel by clicking 'Browse'. When clicking on 'Next Step' you wil get to the random-image-picker screen. There you can click on 'Pick random image' to pick a random image. Afterwards it will be removed from the queue and you can click the button again. Now it will pick another random image and the previous image will be excluded. You can also reset the images and upload new ones by clicking the 'Reset images button'.</p>
-          </div>
+          
         </div>
-      </div>
 
-      <div id="step-2" style="display: none;">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h1 class="mt-3 mb-3">Random image picker</h1>
-            <p id="information-text" class="step-2-clear"></p>
-            <button type="button" class="btn btn-success" onclick="pickRandomImage();">Pick random image</button>
-            <button type="button" class="btn btn-warning" onclick="previousStep();">Reset images</button>
-            <div id="random-image-div" class="step-2-clear h-55 mt-5">
-              <img id="random-image" class="img-thumbnail random-image" src="">
+        <footer class="sticky-footer py-4 bg-dark text-white-50">
+            <div class="container text-center">
+                <small>Made by <a href="https://www.mdebuck.org">Manu De Buck</a>. Find the project on <a href="https://github.com/ManuDeBuck/random-image-picker/">GitHub</a>.</small>
             </div>
-          </div>
-        </div>
-      </div>
+        </footer>
 
-  </div>
-
-  <footer class="sticky-footer py-4 bg-dark text-white-50">
-    <div class="container text-center">
-      <small>Made by <a href="https://www.mdebuck.org">Manu De Buck</a>. Find the project on <a href="https://github.com/ManuDeBuck/random-image-picker/">GitHub</a>.</small>
-    </div>
-  </footer>
-
-  <!-- Javascript -->
-  <script type="text/Javascript" src="actions.js"></script>
-  <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Javascript -->
+        <script type="text/Javascript" src="actions.js"></script>
+        <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
-</html> 
+</html>
