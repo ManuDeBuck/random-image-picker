@@ -85,6 +85,7 @@ function nextStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP++;
+        $("#reset-button").prop('disabled', true);
     }
 }
 
