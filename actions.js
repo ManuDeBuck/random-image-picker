@@ -38,7 +38,7 @@ function doCarousel(index, durations) {
     let randomImage = $("#random-image");
     if (durations.length > 0) {
         randomImage.prop("src", IMAGES[index]);
-        randomImage.css("background-color","transparent");
+        randomImage.css("background-color", "transparent");
         const duration = durations.shift();
         setTimeout(function() {
             doCarousel(index + 1, durations);
@@ -47,7 +47,7 @@ function doCarousel(index, durations) {
         // Freeze and remove image from list
         randomImage.prop("src", IMAGES[index]);
         setTimeout(function() {
-            randomImage.css("background-color","black");
+            randomImage.css("background-color", "#343a40");
         }, 1000);
         IMAGES.splice(index, 1);
     }
