@@ -49,7 +49,6 @@ function doCarousel(index, durations) {
         setTimeout(function() {
             randomImage.css("background-color","black");
         }, 1000);
-        // $("#random-image").css("background-color","green");
         IMAGES.splice(index, 1);
     }
 }
