@@ -22,6 +22,8 @@ function previewImages() {
 }
 
 function pickRandomImage() {
+    $("#reset-button").prop('disabled', false);
+    $("#pick-button").prop('disabled', true);
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
         $("#random-image").html("");
@@ -47,6 +49,7 @@ function doCarousel(index, durations) {
         data = `<img class="img-thumbnail random-image" src="` + IMAGES[index] + `">`;
         $("#random-image").html(data);
         IMAGES.splice(index, 1);
+        $("#pick-button").prop('disabled', false);
     }
 }
 
@@ -82,6 +85,7 @@ function nextStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP++;
+        $("#reset-button").prop('disabled', true);
     }
 }
 
@@ -95,6 +99,7 @@ function previousStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP--;
+        $("#reset-button").prop('disabled', true);
     }
 }
 
