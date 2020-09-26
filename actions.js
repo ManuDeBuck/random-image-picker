@@ -6,8 +6,10 @@ const AMOUNT_STEPS = 2;
 let CURRENT_STEP = 1;
 
 function previewImages() {
+    IMAGES = [];
     $("#yourimagestitle").html("Images selected by you");
     $("#usage").html("");
+    $("#random-image-div").css('display', 'none');
     for (let file of document.getElementById("imagesInput").files) {
         let oFReader = new FileReader();
         oFReader.readAsDataURL(file);
@@ -26,7 +28,7 @@ function pickRandomImage() {
     $("#pick-button").prop('disabled', true);
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
-        $("#random-image").html("");
+        $("#random-image-div").css('display', 'none');
     } else {
         selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
         const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
@@ -38,6 +40,7 @@ function pickRandomImage() {
 function doCarousel(index, durations) {
     index = index % IMAGES.length;
     let randomImage = $("#random-image");
+    $("#random-image-div").css('display', '');
     if (durations.length > 0) {
         randomImage.prop("src", IMAGES[index]);
         randomImage.css("background-color", "transparent");
@@ -48,9 +51,7 @@ function doCarousel(index, durations) {
     } else {
         // Freeze and remove image from list
         randomImage.prop("src", IMAGES[index]);
-        setTimeout(function() {
-            randomImage.css("background-color", "#343a40");
-        }, 1000);
+        randomImage.css("background-color", "#343a40");
         IMAGES.splice(index, 1);
         $("#pick-button").prop('disabled', false);
     }
@@ -92,7 +93,9 @@ function nextStep() {
             $("#information-text").html("No images left");
             $("#reset-button").prop('disabled', false);
             $("#pick-button").prop('disabled', true);
+            $("#random-image-div").css('display', 'none');
         } else {
+            $("#pick-button").prop('disabled', false);
             $("#reset-button").prop('disabled', true);
         }
     }
