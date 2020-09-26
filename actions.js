@@ -37,17 +37,20 @@ function pickRandomImage() {
 
 function doCarousel(index, durations) {
     index = index % IMAGES.length;
+    let randomImage = $("#random-image");
     if (durations.length > 0) {
-        data = `<img class="img-thumbnail random-image" src="` + IMAGES[index] + `">`;
-        $("#random-image").html(data);
+        randomImage.prop("src", IMAGES[index]);
+        randomImage.css("background-color", "transparent");
         const duration = durations.shift();
         setTimeout(function() {
             doCarousel(index + 1, durations);
         }, duration * 1000);
     } else {
         // Freeze and remove image from list
-        data = `<img class="img-thumbnail random-image" src="` + IMAGES[index] + `">`;
-        $("#random-image").html(data);
+        randomImage.prop("src", IMAGES[index]);
+        setTimeout(function() {
+            randomImage.css("background-color", "#343a40");
+        }, 1000);
         IMAGES.splice(index, 1);
         $("#pick-button").prop('disabled', false);
     }
