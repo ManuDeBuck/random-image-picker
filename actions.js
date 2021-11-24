@@ -26,15 +26,29 @@ function previewImages() {
 function pickRandomImage() {
     $("#reset-button").prop('disabled', false);
     $("#pick-button").prop('disabled', true);
+    const directly = $("#show-directly")[0].checked;
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
         $("#random-image-div").css('display', 'none');
     } else {
         selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
-        const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
-        let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
-        doCarousel(0, durations);
+        if (directly) {
+            setFinalImage(selected);
+        } else {
+            const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
+            let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
+            doCarousel(0, durations);
+        }
     }
+}
+
+function setFinalImage(index) {
+    let randomImage = $("#random-image");
+    $("#random-image-div").css('display', '');
+    randomImage.prop("src", IMAGES[index]);
+    randomImage.css("background-color", "#343a40");
+    IMAGES.splice(index, 1);
+    $("#pick-button").prop('disabled', false);
 }
 
 function doCarousel(index, durations) {
@@ -50,10 +64,7 @@ function doCarousel(index, durations) {
         }, duration * 1000);
     } else {
         // Freeze and remove image from list
-        randomImage.prop("src", IMAGES[index]);
-        randomImage.css("background-color", "#343a40");
-        IMAGES.splice(index, 1);
-        $("#pick-button").prop('disabled', false);
+        setFinalImage(index);
     }
 }
 

@@ -29,19 +29,25 @@
         <div class="container page-content">
             <div id="step-1">
                 <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h1 class="mt-3 mb-3">Upload your images</h1>
-                        <div class="row text-center ml-1">
+                    <div class="col-12">
+                        <h1 class="mt-3 mb-3 text-center">Upload your images</h1>
+                        <div class="row text-center">
                             <div class="input-group col-9">
                                 <input type="file" class="custom-file-input" id="imagesInput" multiple onchange="previewImages();">
                                 <label class="custom-file-label" for="imagesInput">Choose images</label>
                             </div>
                             <button type="button" class="btn btn-warning col-2 ml-1" onclick="nextStep();">Next step</button>
                         </div>
+                        <div class="col-12 mt-4">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="show-directly">
+                                <label class="custom-control-label" for="show-directly">Show directly. If enabled no carousel animation will be shown and a random image will be picked directly.</label>
+                            </div>
+                        </div>
                         <h1 class="mt-5 step-1-clear" id="yourimagestitle"></h1>
                         <div id="images" class="step-1-clear"></div>
                     </div>
-                    <div class="row mr-1 ml-1">
+                    <div class="row">
                         <h1>Explanation</h1>
                         <p>Above you can choose pictures you want to add to the carousel by clicking 'Browse'. When clicking on 'Next Step' you wil get to the random-image-picker screen. There you can click on 'Pick random image' to pick a random image.
                             Afterwards it will be removed from the queue and you can click the button again. Now it will pick another random image and the previous image will be excluded. You can also reset the images and upload new ones by clicking the
