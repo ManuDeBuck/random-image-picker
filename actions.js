@@ -40,7 +40,7 @@ function pickRandomImage() {
         if (directly) {
             setFinalImage(selected);
         } else {
-            doCarousel(0, durations);
+            doCarousel(0);
         }
         if (deleteImage) {
             deleteSelectedImage(deleteImage);
