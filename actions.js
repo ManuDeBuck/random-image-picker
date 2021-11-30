@@ -63,7 +63,7 @@ function doCarouselRec(index, durations) {
         randomImage.css("background-color", "transparent");
         const duration = durations.shift();
         setTimeout(function () {
-            doCarousel(index + 1, durations);
+            doCarouselRec(index + 1, durations);
         }, duration * 1000);
     } else {
         // Freeze and remove image from list
