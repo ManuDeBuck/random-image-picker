@@ -3,8 +3,8 @@
 }
 
 .random-image {
-    max-height: 70%;
     width: auto;
+    max-height: 35em;
 }
 
 html,
@@ -14,10 +14,6 @@ body {
 
 .page-content {
     flex: 1 0 auto;
-}
-
-.sticky-footer {
-    flex-shrink: none;
 }
 
 .img-thumbnail.random-image {

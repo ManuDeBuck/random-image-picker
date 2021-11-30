@@ -6,16 +6,18 @@ const AMOUNT_STEPS = 2;
 let CURRENT_STEP = 1;
 
 function previewImages() {
-    IMAGES = [];
-    $("#yourimagestitle").html("Images selected by you");
-    $("#usage").html("");
+    $("#yourimagestitle").html("Selected images");
     $("#random-image-div").css('display', 'none');
+
+    IMAGES = [];
+    const images = $("#images");
+
     for (let file of document.getElementById("imagesInput").files) {
         let oFReader = new FileReader();
         oFReader.readAsDataURL(file);
 
-        oFReader.onload = function(oFREvent) {
-            data = $("#images").html()
+        oFReader.onload = function (oFREvent) {
+            data = images.html()
             data += `<img class="img-thumbnail thumbnail" src='` + oFREvent.target.result + `'>`
             $("#images").html(data);
             IMAGES.push(oFREvent.target.result);
@@ -26,32 +28,33 @@ function previewImages() {
 function pickRandomImage() {
     $("#reset-button").prop('disabled', false);
     $("#pick-button").prop('disabled', true);
+
+    const deleteImage = $("#delete-image")[0].checked;
     const directly = $("#show-directly")[0].checked;
+
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
         $("#random-image-div").css('display', 'none');
     } else {
-        selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
+        const selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
         if (directly) {
             setFinalImage(selected);
         } else {
-            const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
-            let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
             doCarousel(0, durations);
+        }
+        if (deleteImage) {
+            deleteSelectedImage(deleteImage);
         }
     }
 }
 
-function setFinalImage(index) {
-    let randomImage = $("#random-image");
-    $("#random-image-div").css('display', '');
-    randomImage.prop("src", IMAGES[index]);
-    randomImage.css("background-color", "#343a40");
-    IMAGES.splice(index, 1);
-    $("#pick-button").prop('disabled', false);
+function doCarousel(index) {
+    const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
+    let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
+    doCarouselRec(index, durations);
 }
 
-function doCarousel(index, durations) {
+function doCarouselRec(index, durations) {
     index = index % IMAGES.length;
     let randomImage = $("#random-image");
     $("#random-image-div").css('display', '');
@@ -59,7 +62,7 @@ function doCarousel(index, durations) {
         randomImage.prop("src", IMAGES[index]);
         randomImage.css("background-color", "transparent");
         const duration = durations.shift();
-        setTimeout(function() {
+        setTimeout(function () {
             doCarousel(index + 1, durations);
         }, duration * 1000);
     } else {
@@ -90,12 +93,24 @@ function f(x, steps) {
     return -a * Math.log(x) + c;
 }
 
+function deleteSelectedImage(index) {
+    IMAGES = IMAGES.splice(index, 1);
+}
+
+function setFinalImage(index) {
+    let randomImage = $("#random-image");
+    $("#random-image-div").css('display', '');
+    randomImage.prop("src", IMAGES[index]);
+    randomImage.css("background-color", "#343a40");
+    $("#pick-button").prop('disabled', false);
+}
+
 function nextStep() {
     if (CURRENT_STEP < AMOUNT_STEPS) {
-        $(`#step-` + CURRENT_STEP).each(function() {
+        $(`#step-` + CURRENT_STEP).each(function () {
             $(this).css("display", "none");
         })
-        $(`#step-` + (CURRENT_STEP + 1)).each(function() {
+        $(`#step-` + (CURRENT_STEP + 1)).each(function () {
             $(this).css("display", "");
         });
         clearStep(CURRENT_STEP);
@@ -115,10 +130,10 @@ function nextStep() {
 function previousStep() {
     if (CURRENT_STEP > 0) {
         IMAGES = [];
-        $(`#step-` + CURRENT_STEP).each(function() {
+        $(`#step-` + CURRENT_STEP).each(function () {
             $(this).css("display", "none");
         })
-        $(`#step-` + (CURRENT_STEP - 1)).each(function() {
+        $(`#step-` + (CURRENT_STEP - 1)).each(function () {
             $(this).css("display", "");
         });
         clearStep(CURRENT_STEP);
@@ -128,7 +143,7 @@ function previousStep() {
 }
 
 function clearStep(step) {
-    $(`.step-` + step + `-clear`).each(function() {
+    $(`.step-` + step + `-clear`).each(function () {
         $(this).html("");
     });
 }
