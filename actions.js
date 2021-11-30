@@ -7,7 +7,7 @@ let CURRENT_STEP = 1;
 
 function previewImages() {
     $("#yourimagestitle").html("Selected images");
-    $("#random-image-div").css('display', 'none');
+    $("#random-image-div").css("display", "none");
 
     IMAGES = [];
     const images = $("#images");
@@ -18,7 +18,7 @@ function previewImages() {
 
         oFReader.onload = function (oFREvent) {
             data = images.html()
-            data += `<img class="img-thumbnail thumbnail" src='` + oFREvent.target.result + `'>`
+            data += `<img class="img-thumbnail thumbnail" src="` + oFREvent.target.result + `">`
             $("#images").html(data);
             IMAGES.push(oFREvent.target.result);
         };
@@ -26,48 +26,45 @@ function previewImages() {
 }
 
 function pickRandomImage() {
-    $("#reset-button").prop('disabled', false);
-    $("#pick-button").prop('disabled', true);
+    $("#reset-button").prop("disabled", false);
+    $("#pick-button").prop("disabled", true);
 
     const deleteImage = $("#delete-image")[0].checked;
     const directly = $("#show-directly")[0].checked;
 
     if (!IMAGES.length) {
         $("#information-text").html("No images left");
-        $("#random-image-div").css('display', 'none');
+        $("#random-image-div").css("display", "none");
     } else {
         const selected = Math.floor(Math.random() * IMAGES.length); // Pick random image
         if (directly) {
-            setFinalImage(selected);
+            setFinalImage(selected, deleteImage);
         } else {
-            doCarousel(selected);
-        }
-        if (deleteImage) {
-            deleteSelectedImage(deleteImage);
+            doCarousel(selected, deleteImage);
         }
     }
 }
 
-function doCarousel(selected) {
+function doCarousel(selected, deleteImage) {
     const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
-    let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
-    doCarouselRec(0, durations);
+    const durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
+    doCarouselRec(0, durations, deleteImage);
 }
 
-function doCarouselRec(index, durations) {
+function doCarouselRec(index, durations, deleteImage) {
     index = index % IMAGES.length;
-    let randomImage = $("#random-image");
-    $("#random-image-div").css('display', '');
+    const randomImage = $("#random-image");
+    $("#random-image-div").css("display", "");
     if (durations.length > 0) {
         randomImage.prop("src", IMAGES[index]);
         randomImage.css("background-color", "transparent");
         const duration = durations.shift();
         setTimeout(function () {
-            doCarouselRec(index + 1, durations);
+            doCarouselRec(index + 1, durations, deleteImage);
         }, duration * 1000);
     } else {
         // Freeze and remove image from list
-        setFinalImage(index);
+        setFinalImage(index, deleteImage);
     }
 }
 
@@ -94,15 +91,18 @@ function f(x, steps) {
 }
 
 function deleteSelectedImage(index) {
-    IMAGES = IMAGES.splice(index, 1);
+    IMAGES.splice(index, 1);
 }
 
-function setFinalImage(index) {
+function setFinalImage(index, deleteImage) {
     let randomImage = $("#random-image");
-    $("#random-image-div").css('display', '');
+    $("#random-image-div").css("display", "");
     randomImage.prop("src", IMAGES[index]);
     randomImage.css("background-color", "#343a40");
-    $("#pick-button").prop('disabled', false);
+    $("#pick-button").prop("disabled", false);
+    if (deleteImage) {
+        deleteSelectedImage(index);
+    }
 }
 
 function nextStep() {
@@ -117,12 +117,12 @@ function nextStep() {
         CURRENT_STEP++;
         if (!IMAGES.length) {
             $("#information-text").html("No images left");
-            $("#reset-button").prop('disabled', false);
-            $("#pick-button").prop('disabled', true);
-            $("#random-image-div").css('display', 'none');
+            $("#reset-button").prop("disabled", false);
+            $("#pick-button").prop("disabled", true);
+            $("#random-image-div").css("display", "none");
         } else {
-            $("#pick-button").prop('disabled', false);
-            $("#reset-button").prop('disabled', true);
+            $("#pick-button").prop("disabled", false);
+            $("#reset-button").prop("disabled", true);
         }
     }
 }
@@ -138,7 +138,7 @@ function previousStep() {
         });
         clearStep(CURRENT_STEP);
         CURRENT_STEP--;
-        $("#reset-button").prop('disabled', true);
+        $("#reset-button").prop("disabled", true);
     }
 }
 
