@@ -40,7 +40,7 @@ function pickRandomImage() {
         if (directly) {
             setFinalImage(selected);
         } else {
-            doCarousel(0);
+            doCarousel(selected);
         }
         if (deleteImage) {
             deleteSelectedImage(deleteImage);
@@ -48,10 +48,10 @@ function pickRandomImage() {
     }
 }
 
-function doCarousel(index) {
+function doCarousel(selected) {
     const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
     let durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
-    doCarouselRec(index, durations);
+    doCarouselRec(0, durations);
 }
 
 function doCarouselRec(index, durations) {
