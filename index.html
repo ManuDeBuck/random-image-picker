@@ -39,9 +39,9 @@
 <body class="d-flex flex-column">
 
 <div class="page-content d-flex flex-column">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
         <div class="container">
-            <a class="navbar-brand" href="https://imagepicker.org">Image Picker</a>
+            <a class="navbar-brand" href="https://imagepicker.org">Random Image Picker</a>
         </div>
     </nav>
 
@@ -56,7 +56,7 @@
                                    onchange="previewImages();">
                             <label class="custom-file-label" for="imagesInput">Select Images</label>
                         </div>
-                        <button type="button" class="btn btn-warning col-12 col-md-2 ml-0 ml-md-1 mt-2 mt-md-0"
+                        <button type="button" class="btn btn-success col-12 col-md-2 ml-0 ml-md-1 mt-2 mt-md-0"
                                 onclick="nextStep();">Next
                         </button>
                     </div>
@@ -91,11 +91,11 @@
                             <div class="my-4">
                                 <button type="button" class="btn btn-sm btn-success" disabled="disabled">Pick Image
                                 </button>
-                                <button type="button" class="btn btn-sm btn-warning" disabled="disabled">Reset Images
+                                <button type="button" class="btn btn-sm btn-danger" disabled="disabled">Reset Images
                                 </button>
                             </div>
 
-                            <p> The 'Pick Random Image' button will pick a random image from the batch you selected
+                            <p> The 'Pick Image' button will pick a random image from the batch you selected
                                 earlier.</p>
                             <p> The 'Reset Images' button, will take you back to the previous page, where you can select
                                 new
@@ -124,12 +124,12 @@
             <div class="row">
                 <div class="col-lg-12 mb-4 text-center">
                     <h1 class="mt-3 mb-3">Random Image Picker</h1>
-                    <p id="information-text" class="step-2-clear"></p>
+                    <p id="information-text" class="step-2-clear text-danger"></p>
                     <button id="pick-button" type="button" class="btn btn-success" onclick="pickRandomImage();">Pick
                         Random
                         Image
                     </button>
-                    <button id="reset-button" type="button" class="btn btn-warning" onclick="previousStep();">Reset
+                    <button id="reset-button" type="button" class="btn btn-danger" onclick="previousStep();">Reset
                         Images
                     </button>
                     <div id="random-image-div" class="h-55 mt-5">
@@ -141,7 +141,7 @@
 
     </div>
 
-    <footer class="sticky-footer py-4 bg-dark text-white-50">
+    <footer class="sticky-footer py-4 bg-primary text-white-50">
         <div class="container text-center">
             <small>Find the project on <a href="https://github.com/ManuDeBuck/random-image-picker/">GitHub</a>. Created
                 by <a href="https://www.mdebuck.org">Manu De Buck</a>.</small>

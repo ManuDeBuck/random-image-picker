@@ -57,7 +57,7 @@ function doCarouselRec(index, durations, deleteImage) {
     $("#random-image-div").css("display", "");
     if (durations.length > 0) {
         randomImage.prop("src", IMAGES[index]);
-        randomImage.css("background-color", "transparent");
+        randomImage.removeClass("random-selected");
         const duration = durations.shift();
         setTimeout(function () {
             doCarouselRec(index + 1, durations, deleteImage);
@@ -98,7 +98,7 @@ function setFinalImage(index, deleteImage) {
     let randomImage = $("#random-image");
     $("#random-image-div").css("display", "");
     randomImage.prop("src", IMAGES[index]);
-    randomImage.css("background-color", "#343a40");
+    randomImage.addClass("random-selected");
     $("#pick-button").prop("disabled", false);
     if (deleteImage) {
         deleteSelectedImage(index);
