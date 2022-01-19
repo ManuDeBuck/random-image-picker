@@ -2,14 +2,9 @@ let IMAGES = []; // Will put all images in this
 const ROUNDS = 1; // Amount of rounds the carousel will shift trough
 const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
 
-const AMOUNT_STEPS = 2;
-let CURRENT_STEP = 1;
-
-function previewImages() {
+function loadImages() {
     $("#yourimagestitle").html("Selected images");
     $("#random-image-div").css("display", "none");
-
-    IMAGES = [];
     const images = $("#images");
 
     for (let file of document.getElementById("imagesInput").files) {
@@ -18,11 +13,12 @@ function previewImages() {
 
         oFReader.onload = function (oFREvent) {
             data = images.html()
-            data += `<img class="img-thumbnail thumbnail" src="` + oFREvent.target.result + `">`
+            data += `<img alt="imagepicker.org carousel image" class="img-thumbnail thumbnail" src="${oFREvent.target.result}">`
             $("#images").html(data);
             IMAGES.push(oFREvent.target.result);
         };
     }
+    document.getElementById("imagesInput").value = null;
 }
 
 function pickRandomImage() {
@@ -106,45 +102,38 @@ function setFinalImage(index, deleteImage) {
     }
 }
 
-function nextStep() {
-    if (CURRENT_STEP < AMOUNT_STEPS) {
-        $(`#step-` + CURRENT_STEP).each(function () {
-            $(this).css("display", "none");
-        })
-        $(`#step-` + (CURRENT_STEP + 1)).each(function () {
-            $(this).css("display", "");
-        });
-        clearStep(CURRENT_STEP);
-        CURRENT_STEP++;
-        if (!IMAGES.length) {
-            $("#information-text").html("No images left");
-            $("#reset-button").prop("disabled", false);
-            $("#pick-button").prop("disabled", true);
-            $("#random-image-div").css("display", "none");
-        } else {
-            $("#pick-button").prop("disabled", false);
-            $("#reset-button").prop("disabled", true);
-        }
-    }
-}
+function start() {
+    $(`#step-1`).each(function () {
+        $(this).css("display", "none");
+    })
+    $(`#step-2`).each(function () {
+        $(this).css("display", "");
+    });
+    $(`.step-1-clear`).each(function () {
+        $(this).html("");
+    });
 
-function previousStep() {
-    if (CURRENT_STEP > 0) {
-        IMAGES = [];
-        $(`#step-` + CURRENT_STEP).each(function () {
-            $(this).css("display", "none");
-        })
-        $(`#step-` + (CURRENT_STEP - 1)).each(function () {
-            $(this).css("display", "");
-        });
-        clearStep(CURRENT_STEP);
-        CURRENT_STEP--;
+    if (!IMAGES.length) {
+        $("#information-text").html("No images left");
+        $("#reset-button").prop("disabled", false);
+        $("#pick-button").prop("disabled", true);
+        $("#random-image-div").css("display", "none");
+    } else {
+        $("#pick-button").prop("disabled", false);
         $("#reset-button").prop("disabled", true);
     }
 }
 
-function clearStep(step) {
-    $(`.step-` + step + `-clear`).each(function () {
+function reset() {
+    IMAGES = [];
+    $(`#step-1`).each(function () {
+        $(this).css("display", "");
+    });
+    $(`#step-2`).each(function () {
+        $(this).css("display", "none");
+    })
+    $(`.step-2-clear`).each(function () {
         $(this).html("");
     });
+    $("#reset-button").prop("disabled", true);
 }

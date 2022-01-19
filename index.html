@@ -53,11 +53,11 @@
                     <div class="col-12 row">
                         <div class="input-group col-12 col-md-9">
                             <input type="file" class="custom-file-input" id="imagesInput" multiple
-                                   onchange="previewImages();">
+                                   onchange="loadImages();">
                             <label class="custom-file-label" for="imagesInput">Select Images</label>
                         </div>
                         <button type="button" class="btn btn-success col-12 col-md-2 ml-0 ml-md-1 mt-2 mt-md-0"
-                                onclick="nextStep();">Next
+                                onclick="start();">Next
                         </button>
                     </div>
                     <div class="col-12 mt-4">
@@ -133,7 +133,7 @@
                         Random
                         Image
                     </button>
-                    <button id="reset-button" type="button" class="btn btn-danger" onclick="previousStep();">Reset
+                    <button id="reset-button" type="button" class="btn btn-danger" onclick="reset();">Reset
                         Images
                     </button>
                     <div id="random-image-div" class="h-55 mt-5">
