@@ -46,6 +46,7 @@ function pickRandomImage() {
 }
 
 function doCarousel(selected, deleteImage) {
+    pa.track({name: 'Do Carousel', value: IMAGES.length})
     const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
     const durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
     doCarouselRec(0, durations, deleteImage);
