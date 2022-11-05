@@ -3,6 +3,8 @@ const ROUNDS = 1; // Amount of rounds the carousel will shift trough
 const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
 
 function loadImages() {
+    $("#start-button").prop("disabled", false);
+
     $("#yourimagestitle").html("Selected images");
     $("#random-image-div").css("display", "none");
     const images = $("#images");
@@ -18,7 +20,6 @@ function loadImages() {
             IMAGES.push(oFREvent.target.result);
         };
     }
-    document.getElementById("imagesInput").value = null;
 
     pa.track({name: 'Load images', value: IMAGES.length});
 }
@@ -138,4 +139,5 @@ function reset() {
         $(this).html("");
     });
     $("#reset-button").prop("disabled", true);
+    $("#start-button").prop("disabled", true);
 }
