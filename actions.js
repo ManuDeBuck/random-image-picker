@@ -1,4 +1,6 @@
 let IMAGES = []; // Will put all images in this
+let pickedImageHistory = []; // Will put all picked images in this
+let roundsPlayed = 0; // Amount of rounds played
 const ROUNDS = 1; // Amount of rounds the carousel will shift trough
 const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
 
@@ -100,9 +102,32 @@ function setFinalImage(index, deleteImage) {
     randomImage.prop("src", IMAGES[index]);
     randomImage.addClass("random-selected");
     $("#pick-button").prop("disabled", false);
+
+    pickedImageHistory.push(IMAGES[index]);
+    updatePickedImages();
+
     if (deleteImage) {
         deleteSelectedImage(index);
     }
+}
+
+function updatePickedImages() {
+    roundsPlayed += 1;
+    if (roundsPlayed >= 1) {
+        $("#previous-image-1").prop("src", pickedImageHistory[pickedImageHistory.length - 1]).css("display", "");
+    }
+    if (roundsPlayed >= 2) {
+        $("#previous-image-2").prop("src", pickedImageHistory[pickedImageHistory.length - 2]).css("display", "");
+    }
+    if (roundsPlayed >= 3) {
+        $("#previous-image-3").prop("src", pickedImageHistory[pickedImageHistory.length - 3]).css("display", "");
+    }
+}
+
+function resetPickedImages() {
+    $("#previous-image-1").css("display", "none");
+    $("#previous-image-2").css("display", "none");
+    $("#previous-image-3").css("display", "none");
 }
 
 function start() {
@@ -129,6 +154,11 @@ function start() {
 
 function reset() {
     IMAGES = [];
+
+    pickedImageHistory = [];
+    roundsPlayed = 0;
+    resetPickedImages();
+
     $(`#step-1`).each(function () {
         $(this).css("display", "");
     });
