@@ -52,7 +52,12 @@ a {
 
 .history-image {
     width: auto;
-    max-height: 25vh;
+    max-height: 20vh;
+}
+
+#history-container {
+    max-height: calc(100vh - 2 * 0.3125rem - 1.25rem - 2 * 0.5rem - 1rem - 2 * 1.5rem - 6rem);
+    overflow-y: auto;
 }
 
 html,
