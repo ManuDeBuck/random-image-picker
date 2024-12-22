@@ -171,8 +171,8 @@ function reset() {
   $(`#step-1`).each(function () {
     $(this).css("display", "");
   });
-  $(`#step-2`).each(function () {
-    $(this).css("display", "none");
+  $('#step-2').each(function () {
+    $(this).attr('style', 'display: none !important');
   });
   $(`.step-2-clear`).each(function () {
     $(this).html("");
