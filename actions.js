@@ -1,4 +1,5 @@
 let IMAGES = []; // Will put all images in this
+let pickedImageHistory = []; // Will put all picked images in this
 const ROUNDS = 1; // Amount of rounds the carousel will shift trough
 const CAROUSEL_TIME = 5; // Total time in seconds carousel will spin
 
@@ -14,14 +15,14 @@ function loadImages() {
         oFReader.readAsDataURL(file);
 
         oFReader.onload = function (oFREvent) {
-            data = images.html()
-            data += `<img alt="imagepicker.org carousel image" class="img-thumbnail thumbnail" src="${oFREvent.target.result}">`
+            data = images.html();
+            data += `<img alt="imagepicker.org carousel image" class="img-thumbnail thumbnail" src="${oFREvent.target.result}">`;
             $("#images").html(data);
             IMAGES.push(oFREvent.target.result);
         };
     }
 
-    pa.track({name: 'Load images', value: IMAGES.length});
+    pa.track({name: "Load images", value: IMAGES.length});
 }
 
 function pickRandomImage() {
@@ -45,7 +46,7 @@ function pickRandomImage() {
 }
 
 function doCarousel(selected, deleteImage) {
-    pa.track({name: 'Do Carousel', value: IMAGES.length});
+    pa.track({name: "Do Carousel", value: IMAGES.length});
     const totalCarousel = ROUNDS * IMAGES.length + selected; // Total images that will be shown in carousel
     const durations = computeDurations(totalCarousel); // Compute a list of durations for each image display in the carousel
     doCarouselRec(0, durations, deleteImage);
@@ -55,9 +56,11 @@ function doCarouselRec(index, durations, deleteImage) {
     index = index % IMAGES.length;
     const randomImage = $("#random-image");
     $("#random-image-div").css("display", "");
+
     if (durations.length > 0) {
         randomImage.prop("src", IMAGES[index]);
         randomImage.removeClass("random-selected");
+
         const duration = durations.shift();
         setTimeout(function () {
             doCarouselRec(index + 1, durations, deleteImage);
@@ -80,12 +83,11 @@ function computeDurations(steps) {
  * Some beautiful math to create a increasing-time effect in the carousel spin
  */
 function f(x, steps) {
-    const carousel_time = Math.min(CAROUSEL_TIME, IMAGES.length);
     sigm = 0;
     for (let i = 1; i <= steps; i += 1) {
         sigm += Math.log(i);
     }
-    a = CAROUSEL_TIME / (steps * Math.log(steps) - sigm)
+    a = CAROUSEL_TIME / (steps * Math.log(steps) - sigm);
     c = (CAROUSEL_TIME * Math.log(steps)) / (steps * Math.log(steps) - sigm);
     return -a * Math.log(x) + c;
 }
@@ -100,20 +102,55 @@ function setFinalImage(index, deleteImage) {
     randomImage.prop("src", IMAGES[index]);
     randomImage.addClass("random-selected");
     $("#pick-button").prop("disabled", false);
+
+    const history = $("#show-history")[0].checked;
+    if (history) {
+        pickedImageHistory.push(IMAGES[index]);
+        updatePickedImages();
+    }
+
     if (deleteImage) {
         deleteSelectedImage(index);
+    }
+}
+
+function updatePickedImages() {
+    const historyContainer = $("#history-container");
+
+    if (historyContainer.find(".history-image-wrapper").length === 0) {
+        historyContainer.empty();
+        historyContainer.append(`
+            <div class="col-12 mb-4 history-image-wrapper">
+                <img class="img-thumbnail history-image" src="${
+            pickedImageHistory[pickedImageHistory.length - 1]
+        }" alt="Previously picked image ${pickedImageHistory.length}">
+            </div>
+        `);
+    } else {
+        historyContainer.find(".history-image-wrapper").first().before(`
+            <div class="col-12 mb-2 history-image-wrapper">
+                <img class="img-thumbnail history-image" src="${
+            pickedImageHistory[pickedImageHistory.length - 1]
+        }" alt="Previously picked image ${pickedImageHistory.length}">
+            </div>
+        `);
     }
 }
 
 function start() {
     $(`#step-1`).each(function () {
         $(this).css("display", "none");
-    })
+    });
     $(`#step-2`).each(function () {
         $(this).css("display", "");
     });
     $(`.step-1-clear`).each(function () {
         $(this).html("");
+    });
+    $(`#history`).each(function () {
+        if ($("#show-history")[0].checked) {
+            $(this).css("display", "");
+        }
     });
 
     if (!IMAGES.length) {
@@ -129,14 +166,23 @@ function start() {
 
 function reset() {
     IMAGES = [];
+
+    pickedImageHistory = [];
+    const historyContainer = $(`#history-container`);
+    historyContainer.empty();
+    historyContainer.html(`<div id="history-container">No history to show.</div>`);
+
     $(`#step-1`).each(function () {
         $(this).css("display", "");
     });
-    $(`#step-2`).each(function () {
-        $(this).css("display", "none");
-    })
+    $('#step-2').each(function () {
+        $(this).attr('style', 'display: none');
+    });
     $(`.step-2-clear`).each(function () {
         $(this).html("");
+    });
+    $(`#history`).each(function () {
+        $(this).css("display", "none");
     });
     $("#reset-button").prop("disabled", true);
     $("#start-button").prop("disabled", true);
