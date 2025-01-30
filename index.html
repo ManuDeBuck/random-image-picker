@@ -1,307 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta
-      name="description"
-      content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
+            name="description"
+            content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
     />
-    <meta name="author" content="Manu De Buck" />
+    <meta name="author" content="Manu De Buck"/>
 
     <title>Random Image Picker</title>
 
-    <meta property="og:url" content="https://imagepicker.org" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Random Image Picker Carousel" />
+    <meta property="og:url" content="https://imagepicker.org"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Random Image Picker Carousel"/>
     <meta
-      property="og:description"
-      content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
+            property="og:description"
+            content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
     />
-    <meta property="og:site_name" content="Random Image Picker" />
+    <meta property="og:site_name" content="Random Image Picker"/>
     <meta
-      property="keywords"
-      content="random images, random image, image picker, image carousel, random image carousel, random image picker, pick random image, pick random images"
+            property="keywords"
+            content="random images, random image, image picker, image carousel, random image carousel, random image picker, pick random image, pick random images"
     />
-    <meta name="twitter:title" content="Random Image Picker Carousel" />
+    <meta name="twitter:title" content="Random Image Picker Carousel"/>
     <meta
-      name="twitter:description"
-      content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
+            name="twitter:description"
+            content="A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
     />
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://imagepicker.org",
-        "headline": "Random Image Picker Carousel",
-        "description": "A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
-      }
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://imagepicker.org",
+            "headline": "Random Image Picker Carousel",
+            "description": "A Random Image Picker carousel. This web application picks/selects a random image from batch of images of choice. This web application also provides extra features such as a nice visual carousel which makes it more fun to use."
+        }
     </script>
 
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" />
-  </head>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
+</head>
 
-  <body class="d-flex flex-column">
-    <div class="page-content d-flex flex-column">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
+<body class="d-flex flex-column">
+<div class="page-content d-flex flex-column">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
         <div class="container">
-          <a class="navbar-brand" href="https://imagepicker.org"
+            <a class="navbar-brand" href="https://imagepicker.org"
             >Random Image Picker</a
-          >
-        </div>
-      </nav>
-
-      <div class="container page-content">
-        <div id="step-1">
-          <div class="row">
-            <div class="col-12">
-              <h1 class="mt-3 mb-3">Select Images</h1>
-              <div class="col-12 row">
-                <div class="input-group col-12 col-md-9">
-                  <input
-                    type="file"
-                    class="custom-file-input"
-                    id="imagesInput"
-                    multiple
-                    onchange="loadImages();"
-                  />
-                  <label class="custom-file-label" for="imagesInput"
-                    >Select Images</label
-                  >
-                </div>
-                <button
-                  id="start-button"
-                  type="button"
-                  class="btn btn-success col-12 col-md-2 ml-0 ml-md-1 mt-2 mt-md-0"
-                  onclick="start();"
-                  disabled="disabled"
-                >
-                  Next
-                </button>
-              </div>
-              <div class="col-12 mt-4">
-                <div class="custom-control custom-switch">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="delete-image"
-                    checked="checked"
-                  />
-                  <label class="custom-control-label" for="delete-image"
-                    >Remove image. If enabled the picked image will be removed
-                    from the batch of images, otherwise it won't.</label
-                  >
-                </div>
-                <div class="custom-control custom-switch mt-2">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="show-directly"
-                  />
-                  <label class="custom-control-label" for="show-directly"
-                    >Show directly. If enabled no carousel animation will be
-                    shown and a random image will be picked directly.</label
-                  >
-                </div>
-                <div class="custom-control custom-switch mt-2">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="show-history"
-                  />
-                  <label class="custom-control-label" for="show-history"
-                    >Show history. If enabled the previously picked images will
-                    be shown.</label
-                  >
-                </div>
-              </div>
-              <h1 class="mt-4 step-1-clear" id="yourimagestitle"></h1>
-              <div id="images" class="step-1-clear"></div>
-            </div>
-            <div class="col-12">
-              <div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading">
-                  <a href="https://www.buymeacoffee.com/manudebuck"
-                    >Support this application</a
-                  >
-                </h4>
-                <hr />
-                <p class="mb-0">
-                  <b
-                    >Are you a fan of this web application? Do you appreciate
-                    the fact that it's completely free and doesn't have any
-                    ads?</b
-                  >
-                  By
-                  <a href="https://www.buymeacoffee.com/manudebuck"
-                    >supporting the app</a
-                  >, you can help ensure that it stays that way for everyone.
-                  Your support also enables me to continue improving the app
-                  with updates and new features. Please consider
-                  <a href="https://www.buymeacoffee.com/manudebuck"
-                    >supporting this app</a
-                  >
-                  and helping it continue to grow and succeed.
-                </p>
-              </div>
-
-              <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">
-                  <a href="https://double.imagepicker.org"
-                    >Random Image Picker Double</a
-                  >
-                </h4>
-                <hr />
-                <p class="mb-0">
-                  Select two random images from two collections of images
-                  instead of a single one. Check it out via
-                  <a href="https://double.imagepicker.org"
-                    >double.imagepicker.org</a
-                  >!
-                </p>
-              </div>
-              <div class="my-4 card border-secondary text-secondary">
-                <h3 class="card-header">Information</h3>
-                <div class="card-body">
-                  <h4>How does this application work?</h4>
-                  <p>
-                    This application picks a random image from a batch of images
-                    you select.
-                  </p>
-                  <p>
-                    To start, you can select images to by clicking 'Browse'.
-                    Once selected, a preview of all the images will be shown on
-                    this page. When clicking on 'Next', there will be an option
-                    to pick random images. You will be presented two buttons:
-                  </p>
-
-                  <div class="my-4">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-success"
-                      disabled="disabled"
-                    >
-                      Pick Image
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-danger"
-                      disabled="disabled"
-                    >
-                      Reset Images
-                    </button>
-                  </div>
-
-                  <p>
-                    The 'Pick Image' button will pick a random image from the
-                    batch you selected earlier. The 'Reset Images' button, will
-                    take you back to the previous page, where you can select new
-                    images.
-                  </p>
-
-                  <h4>What about my data?</h4>
-                  <p>
-                    You do not need to worry about privacy, as all the pictures
-                    you use on this page will stay on your computer and never
-                    leave. Your images will not be uploaded to the cloud or
-                    whatsoever!
-                  </p>
-
-                  <h4>Feature request?</h4>
-                  <p>
-                    Do you have an idea to add extra functionality to this
-                    application? Feel free to contact
-                    <a href="https://www.mdebuck.org">me</a>!
-                  </p>
-
-                  <h4>Open source?</h4>
-                  <p>
-                    Yes, this application is open source and can be found on
-                    <a href="https://github.com/ManuDeBuck/random-image-picker/"
-                      >GitHub</a
-                    >. Feel free to contribute to this application.
-                  </p>
-
-                  <h4>Want to support this app?</h4>
-                  <a href="https://www.buymeacoffee.com/manudebuck"
-                    >Buy me a pizza</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="step-2" class="d-flex justify-content-center" style="display: none !important;">
-          <div class="row"></div>
-            <div class="col-lg-8 mb-4 text-center">
-              <h1 class="mt-3 mb-3">Random Image Picker</h1>
-              <p id="information-text" class="step-2-clear text-danger"></p>
-              <button
-                id="pick-button"
-                type="button"
-                class="btn btn-success"
-                onclick="pickRandomImage();"
-              >
-                Pick Random Image
-              </button>
-              <button
-                id="reset-button"
-                type="button"
-                class="btn btn-danger"
-                onclick="reset();"
-              >
-                Reset Images
-              </button>
-              <div id="random-image-div" class="h-55 mt-5">
-                <img
-                  id="random-image"
-                  class="img-thumbnail random-image"
-                  src=""
-                  alt="Randomly picked image."
-                />
-              </div>
-            </div>
-            <div
-              id="history"
-              class="col-lg-4 text-center"
-              style="display: none"
             >
-              <h2 class="mt-4 mb-3">Previous images</h2>
-              <div id="history-container">No history to show.</div>
+        </div>
+    </nav>
+
+    <div class="container page-content">
+        <div id="step-1">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="mt-3 mb-3">Select Images</h1>
+                    <div class="col-12 row">
+                        <div class="input-group col-12 col-md-9">
+                            <input
+                                    type="file"
+                                    class="custom-file-input"
+                                    id="imagesInput"
+                                    multiple
+                                    onchange="loadImages();"
+                            />
+                            <label class="custom-file-label" for="imagesInput"
+                            >Select Images</label
+                            >
+                        </div>
+                        <button
+                                id="start-button"
+                                type="button"
+                                class="btn btn-success col-12 col-md-2 ml-0 ml-md-1 mt-2 mt-md-0"
+                                onclick="start();"
+                                disabled="disabled"
+                        >
+                            Next
+                        </button>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <div class="custom-control custom-switch">
+                            <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="delete-image"
+                                    checked="checked"
+                            />
+                            <label class="custom-control-label" for="delete-image"
+                            >Remove image. If enabled the picked image will be removed
+                                from the batch of images, otherwise it won't.</label
+                            >
+                        </div>
+                        <div class="custom-control custom-switch mt-2">
+                            <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="show-directly"
+                            />
+                            <label class="custom-control-label" for="show-directly"
+                            >Show directly. If enabled no carousel animation will be
+                                shown and a random image will be picked directly.</label
+                            >
+                        </div>
+                        <div class="custom-control custom-switch mt-2">
+                            <input
+                                    type="checkbox"
+                                    class="custom-control-input"
+                                    id="show-history"
+                            />
+                            <label class="custom-control-label" for="show-history"
+                            >Show history. If enabled the previously picked images will
+                                be shown.</label
+                            >
+                        </div>
+                    </div>
+                    <h1 class="mt-4 step-1-clear" id="yourimagestitle"></h1>
+                    <div id="images" class="step-1-clear"></div>
+                </div>
+                <div class="col-12">
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">
+                            <a href="https://www.buymeacoffee.com/manudebuck"
+                            >Support this application</a
+                            >
+                        </h4>
+                        <hr/>
+                        <p class="mb-0">
+                            <b
+                            >Are you a fan of this web application? Do you appreciate
+                                the fact that it's completely free and doesn't have any
+                                ads?</b
+                            >
+                            By
+                            <a href="https://www.buymeacoffee.com/manudebuck"
+                            >supporting the app</a
+                            >, you can help ensure that it stays that way for everyone.
+                            Your support also enables me to continue improving the app
+                            with updates and new features. Please consider
+                            <a href="https://www.buymeacoffee.com/manudebuck"
+                            >supporting this app</a
+                            >
+                            and helping it continue to grow and succeed.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">
+                            <a href="https://double.imagepicker.org"
+                            >Random Image Picker Double</a
+                            >
+                        </h4>
+                        <hr/>
+                        <p class="mb-0">
+                            Select two random images from two collections of images
+                            instead of a single one. Check it out via
+                            <a href="https://double.imagepicker.org"
+                            >double.imagepicker.org</a
+                            >!
+                        </p>
+                    </div>
+                    <div class="my-4 card border-secondary text-secondary">
+                        <h3 class="card-header">Information</h3>
+                        <div class="card-body">
+                            <h4>How does this application work?</h4>
+                            <p>
+                                This application picks a random image from a batch of images
+                                you select.
+                            </p>
+                            <p>
+                                To start, you can select images to by clicking 'Browse'.
+                                Once selected, a preview of all the images will be shown on
+                                this page. When clicking on 'Next', there will be an option
+                                to pick random images. You will be presented two buttons:
+                            </p>
+
+                            <div class="my-4">
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-success"
+                                        disabled="disabled"
+                                >
+                                    Pick Image
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-sm btn-danger"
+                                        disabled="disabled"
+                                >
+                                    Reset Images
+                                </button>
+                            </div>
+
+                            <p>
+                                The 'Pick Image' button will pick a random image from the
+                                batch you selected earlier. The 'Reset Images' button, will
+                                take you back to the previous page, where you can select new
+                                images.
+                            </p>
+
+                            <h4>What about my data?</h4>
+                            <p>
+                                You do not need to worry about privacy, as all the pictures
+                                you use on this page will stay on your computer and never
+                                leave. Your images will not be uploaded to the cloud or
+                                whatsoever!
+                            </p>
+
+                            <h4>Feature request?</h4>
+                            <p>
+                                Do you have an idea to add extra functionality to this
+                                application? Feel free to contact
+                                <a href="https://www.mdebuck.org">me</a>!
+                            </p>
+
+                            <h4>Open source?</h4>
+                            <p>
+                                Yes, this application is open source and can be found on
+                                <a href="https://github.com/ManuDeBuck/random-image-picker/"
+                                >GitHub</a
+                                >. Feel free to contribute to this application.
+                            </p>
+
+                            <h4>Want to support this app?</h4>
+                            <a href="https://www.buymeacoffee.com/manudebuck"
+                            >Buy me a pizza</a
+                            >
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <footer class="sticky-footer py-4 bg-primary text-white-50">
-        <div class="container text-center">
-          <small
-            >Find the project on
-            <a href="https://github.com/ManuDeBuck/random-image-picker/"
-              >GitHub</a
-            >. Created by
-            <a href="https://www.mdebuck.org">Manu De Buck</a>.</small
-          >
+        <div id="step-2" class="justify-content-center" style="display: none;">
+            <div class="row w-100">
+                <div class="col-lg-8 col-12 mb-4 text-center">
+                    <h1 class="mt-3 mb-3">Random Image Picker</h1>
+                    <p id="information-text" class="step-2-clear text-danger"></p>
+                    <button
+                            id="pick-button"
+                            type="button"
+                            class="btn btn-success"
+                            onclick="pickRandomImage();"
+                    >
+                        Pick Random Image
+                    </button>
+                    <button
+                            id="reset-button"
+                            type="button"
+                            class="btn btn-danger"
+                            onclick="reset();"
+                    >
+                        Reset Images
+                    </button>
+                    <div id="random-image-div" class="h-55 mt-5">
+                        <img
+                                id="random-image"
+                                class="img-thumbnail random-image"
+                                src=""
+                                alt="Randomly picked image."
+                        />
+                    </div>
+                </div>
+                <div
+                        id="history"
+                        class="col-lg-4 col-12 text-center"
+                        style="display: none"
+                >
+                    <h2 class="mt-4 mb-3">Previous images</h2>
+                    <div id="history-container">No history to show.</div>
+                </div>
+            </div>
         </div>
-      </footer>
-
-      <!-- Javascript -->
-      <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script type="text/Javascript" src="actions.js"></script>
-      <script
-        data-host="https://microanalytics.io"
-        data-dnt="false"
-        src="vendor/microanalytics/script.js"
-        id="ZwSg9rf6GA"
-        async
-        defer
-      ></script>
     </div>
-  </body>
+
+    <footer class="sticky-footer py-4 bg-primary text-white-50">
+        <div class="container text-center">
+            <small
+            >Find the project on
+                <a href="https://github.com/ManuDeBuck/random-image-picker/"
+                >GitHub</a
+                >. Created by
+                <a href="https://www.mdebuck.org">Manu De Buck</a>.</small
+            >
+        </div>
+    </footer>
+
+    <!-- Javascript -->
+    <script src="vendor/jquery/jquery-3.4.1.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/Javascript" src="actions.js"></script>
+    <script
+            data-host="https://microanalytics.io"
+            data-dnt="false"
+            src="vendor/microanalytics/script.js"
+            id="ZwSg9rf6GA"
+            async
+            defer
+    ></script>
+</div>
+</body>
 </html>
