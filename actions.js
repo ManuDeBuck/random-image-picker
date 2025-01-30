@@ -116,6 +116,8 @@ function setFinalImage(index, deleteImage) {
 
 function updatePickedImages() {
   const historyContainer = $("#history-container");
+  historyContainer.empty();
+
   if (historyContainer.find(".history-image-wrapper").length === 0) {
     historyContainer.append(`
             <div class="col-12 mb-4 history-image-wrapper">
