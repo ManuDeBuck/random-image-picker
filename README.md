@@ -5,3 +5,4 @@ Pick a random image from a bunch of images. Nothing more, nothing less.
 
 - [Manu De Buck](https://github.com/ManuDeBuck)
 - [Maxime Moinat](https://github.com/MaximMoinat)
+- [Matisse Callewaert](https://github.com/matissecallewaert)
